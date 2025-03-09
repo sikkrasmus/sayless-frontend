@@ -599,7 +599,7 @@ The CI/CD pipeline is implemented using GitHub Actions and consists of three mai
 - Runs linting and tests (with continue-on-error to prevent blocking deployment)
 
 #### Build and Push Job
-- Runs only on pushes to the main branch
+- Runs only on pushes to the `main branch`
 - Configures AWS credentials
 - Logs in to Amazon ECR
 - Temporarily disables TypeScript validation to ensure builds succeed
@@ -632,6 +632,18 @@ To set up the CI/CD pipeline:
    - Update environment variables in the workflow file
    - Add additional testing or deployment steps
    - Configure notifications for deployment status
+
+#### Common CI/CD Issues and Solutions
+
+1. **Missing yarn.lock file**:
+   - **Issue**: The workflow fails with "Dependencies lock file is not found" error
+   - **Solution**: The workflow is configured to handle this by creating an empty yarn.lock file and using npm commands instead
+   - **Prevention**: Commit a valid yarn.lock file to your repository by running `yarn install` locally first
+
+2. **TypeScript validation errors**:
+   - **Issue**: The Docker build fails due to TypeScript errors
+   - **Solution**: The workflow temporarily disables TypeScript validation during the build
+   - **Best practice**: Fix TypeScript errors in your codebase rather than relying on this workaround
 
 ### Package Configuration
 
