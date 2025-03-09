@@ -35,7 +35,7 @@ const Home: NextPage = () => {
                     SAY LESS.
                 </h1>
                 <p className="text-xl text-gray-600">
-                    The new way to shop. Just a lot <span className="text-accent font-bold">less</span> work.
+                    The new way to shop. Just a lot <span className="text-accent font-bold">less</span> work...
                 </p>
             </div>
 
