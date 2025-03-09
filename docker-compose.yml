@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - mock-api
+
+  # Mock API service for local development
+  mock-api:
+    image: stoplight/prism:4
+    ports:
+      - "8000:4010"
+    command: mock -h 0.0.0.0 /api/openapi.yaml
+    volumes:
+      - ./api:/api
