@@ -37,6 +37,13 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
+# Clean package management files to avoid conflicts
+echo -e "${YELLOW}Checking for package manager conflicts...${NC}"
+if [ -f "yarn.lock" ]; then
+    echo "Removing yarn.lock to avoid package manager conflicts"
+    rm yarn.lock
+fi
+
 # Login to ECR
 echo -e "${YELLOW}Logging in to Amazon ECR...${NC}"
 aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_URI

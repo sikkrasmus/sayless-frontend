@@ -25,45 +25,25 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: 'yarn'
-          cache-dependency-path: '**/yarn.lock'
+          cache: 'npm'
 
-      - name: Check for yarn.lock
-        id: check-yarn-lock
+      - name: Clean package management files
         run: |
-          if [ ! -f "yarn.lock" ]; then
-            echo "yarn.lock not found, creating empty file"
-            touch yarn.lock
-            echo "created=true" >> $GITHUB_OUTPUT
-          else
-            echo "created=false" >> $GITHUB_OUTPUT
+          # Remove yarn.lock if it exists to avoid conflicts
+          if [ -f "yarn.lock" ]; then
+            echo "Removing yarn.lock to avoid package manager conflicts"
+            rm yarn.lock
           fi
 
       - name: Install dependencies
-        run: |
-          if [ "${{ steps.check-yarn-lock.outputs.created }}" == "true" ]; then
-            echo "Installing with npm instead of yarn"
-            npm install
-          else
-            yarn install --frozen-lockfile
-          fi
+        run: npm ci || npm install
 
       - name: Run linting
-        run: |
-          if [ "${{ steps.check-yarn-lock.outputs.created }}" == "true" ]; then
-            npm run lint || true
-          else
-            yarn lint
-          fi
+        run: npm run lint
         continue-on-error: true  # Don't fail the build on lint errors for now
 
       - name: Run tests
-        run: |
-          if [ "${{ steps.check-yarn-lock.outputs.created }}" == "true" ]; then
-            npm test || true
-          else
-            yarn test
-          fi
+        run: npm test
         continue-on-error: true  # Don't fail the build on test errors for now
 
   build-and-push:
