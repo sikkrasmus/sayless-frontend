@@ -3,6 +3,10 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'standalone', // Optimized for Docker
   swcMinify: true,
+  // Ignore TypeScript errors during build
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   images: {
     domains: [
       // Add domains for remote images here

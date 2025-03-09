@@ -1,0 +1,42 @@
+{
+    "family": "sayless-frontend",
+    "networkMode": "awsvpc",
+    "executionRoleArn": "arn:aws:iam::273534795987:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+        {
+            "name": "sayless-frontend",
+            "image": "273534795987.dkr.ecr.eu-west-1.amazonaws.com/sayless-frontend:latest",
+            "essential": true,
+            "portMappings": [
+                {
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/sayless-frontend",
+                    "awslogs-region": "eu-west-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "environment": [
+                {
+                    "name": "NODE_ENV",
+                    "value": "production"
+                },
+                {
+                    "name": "NEXT_PUBLIC_API_URL",
+                    "value": "https://api.yourdomain.com"
+                }
+            ]
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512"
+}

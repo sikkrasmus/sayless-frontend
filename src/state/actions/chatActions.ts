@@ -76,7 +76,7 @@ export async function sendMessage() {
             content: response.data.message,
             sender: 'system',
             timestamp: Date.now(),
-            attachments: response.data.attachments?.map(attachment => ({
+            attachments: response.data.attachments?.map((attachment: any) => ({
                 id: attachment.id,
                 type: attachment.type,
                 url: attachment.url,
