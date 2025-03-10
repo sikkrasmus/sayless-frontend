@@ -8,9 +8,11 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: [
-      // Add domains for remote images here
-      'images.example.com',
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.example.com',
+      },
     ],
   },
   // Enable experimental features if needed

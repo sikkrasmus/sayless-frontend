@@ -1,83 +1,174 @@
-/* Tailwind CSS imports */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* Note: Goldman font needs to be added to the project */
+
 /* Global styles */
 @layer base {
   html {
-    @apply text-base;
+    @apply text-base antialiased;
   }
   
   body {
-    @apply bg-secondary text-gray-900 font-sans antialiased;
+    @apply bg-background-white text-text-primary font-inter;
+    background-image: url('/design_assets/dusty_overlay.jpeg');
+    background-blend-mode: overlay;
+    background-size: cover;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading font-bold;
+    @apply font-goldman font-bold;
   }
   
   h1 {
-    @apply text-4xl md:text-5xl;
+    @apply text-3xl md:text-4xl lg:text-5xl;
   }
   
   h2 {
-    @apply text-3xl md:text-4xl;
+    @apply text-2xl md:text-3xl lg:text-4xl;
   }
   
   h3 {
-    @apply text-2xl md:text-3xl;
+    @apply text-xl md:text-2xl lg:text-3xl;
   }
   
   h4 {
-    @apply text-xl md:text-2xl;
+    @apply text-lg md:text-xl lg:text-2xl;
   }
   
   h5 {
-    @apply text-lg md:text-xl;
+    @apply text-base md:text-lg lg:text-xl;
   }
   
   h6 {
-    @apply text-base md:text-lg;
+    @apply text-sm md:text-base lg:text-lg;
   }
   
   a {
-    @apply text-primary hover:text-primary-light transition-colors;
+    @apply text-burgundy hover:text-burgundy-hover transition-colors;
+  }
+
+  /* Focus styles for accessibility */
+  :focus-visible {
+    @apply outline-none ring-2 ring-burgundy ring-offset-2;
   }
 }
 
 /* Custom component classes */
 @layer components {
+  /* Button variants */
   .btn {
-    @apply inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors;
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 ease-in-out;
   }
   
   .btn-primary {
-    @apply btn bg-primary text-white hover:bg-primary-light focus:ring-primary;
+    @apply btn bg-burgundy text-white hover:bg-burgundy-hover focus:ring-burgundy;
   }
   
   .btn-secondary {
-    @apply btn bg-white text-primary border-primary hover:bg-gray-50 focus:ring-primary;
+    @apply btn bg-white text-burgundy border border-burgundy hover:bg-gray-50 focus:ring-burgundy;
+  }
+
+  .btn-beige {
+    @apply btn bg-beige text-burgundy hover:bg-beige-hover focus:ring-beige;
+  }
+  
+  .btn-outline {
+    @apply btn bg-transparent border border-current text-burgundy hover:bg-burgundy hover:text-white focus:ring-burgundy;
+  }
+  
+  .btn-ghost {
+    @apply btn bg-transparent text-burgundy hover:bg-burgundy-light/10 focus:ring-burgundy;
   }
   
   .btn-sm {
-    @apply px-3 py-1 text-sm;
+    @apply px-3 py-1.5 text-sm rounded-md;
   }
   
   .btn-lg {
-    @apply px-6 py-3 text-lg;
+    @apply px-6 py-3 text-lg rounded-xl;
   }
-  
+
+  /* Input components */
   .input {
-    @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary;
+    @apply block w-full px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-burgundy focus:border-burgundy;
   }
   
+  .input-sm {
+    @apply px-3 py-1.5 text-sm rounded-md;
+  }
+  
+  .input-lg {
+    @apply px-5 py-3 text-lg rounded-xl;
+  }
+
+  .input-search {
+    @apply pl-10 pr-4 py-2 bg-white border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-burgundy focus:border-burgundy;
+  }
+
+  /* Card components */
   .card {
-    @apply bg-white rounded-lg shadow-md overflow-hidden;
+    @apply bg-white rounded-xl shadow-soft overflow-hidden;
   }
   
+  .card-hover {
+    @apply transition-all duration-200 hover:shadow-medium;
+  }
+
+  .card-product {
+    @apply bg-white rounded-lg shadow-soft overflow-hidden transition-all duration-200 hover:shadow-medium;
+  }
+
+  /* Chat components */
+  .chat-bubble {
+    @apply rounded-2xl p-4 max-w-[80%] shadow-soft;
+  }
+
+  .chat-bubble-user {
+    @apply chat-bubble bg-burgundy text-white ml-auto;
+  }
+
+  .chat-bubble-system {
+    @apply chat-bubble bg-white text-text-primary mr-auto;
+  }
+
+  /* Container utilities */
   .container-custom {
-    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+    @apply container mx-auto px-6 sm:px-8 lg:px-10;
+  }
+
+  /* Header components */
+  .header {
+    @apply bg-burgundy text-white py-0;
+  }
+
+  .header-nav-item {
+    @apply text-white hover:text-beige transition-colors;
+  }
+
+  /* Badge components */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply badge bg-burgundy text-white;
+  }
+
+  .badge-secondary {
+    @apply badge bg-beige text-burgundy;
+  }
+
+  .badge-outline {
+    @apply badge bg-transparent border border-current;
+  }
+
+  /* Product grid */
+  .product-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6;
   }
 }
 
@@ -89,5 +180,50 @@
   
   .text-shadow-lg {
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+  }
+
+  .bg-gradient-burgundy {
+    @apply bg-gradient-to-r from-burgundy to-burgundy-light;
+  }
+
+  /* Overlay utilities */
+  .overlay-burgundy {
+    @apply bg-burgundy bg-opacity-75;
+  }
+
+  .overlay-beige {
+    @apply bg-beige bg-opacity-75;
+  }
+
+  /* Aspect ratios for product images */
+  .aspect-product {
+    @apply aspect-w-3 aspect-h-4;
+  }
+
+  /* Truncate text with ellipsis */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
   }
 } 
