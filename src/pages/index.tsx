@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { searchQuery } from '@/state';
 import Header from '@/components/layout/Header';
-import { SearchBar } from '@/components/search';
+import { HeroSection } from '@/components/hero';
 import { TrendingSection } from '@/components/trending';
 import { BrandsSection } from '@/components/brands';
 import { SocialsSection } from '@/components/moodboard';
@@ -38,73 +38,10 @@ const Home: NextPage = () => {
             <Header currentLocation="Estonia" />
 
             {/* Hero Section */}
-            <section className="relative bg-burgundy text-white">
-                {/* Desktop Background with Dusty Overlay */}
-                <div className="hidden md:block absolute inset-0 z-0">
-                    <Image
-                        src="/design_assets/dusty_overlay_main_section.jpeg"
-                        alt="Background Texture"
-                        fill
-                        className="object-cover opacity-40 mix-blend-overlay"
-                        priority
-                    />
-                    <div className="absolute inset-0 bg-burgundy mix-blend-multiply" />
-                </div>
-
-                {/* Mobile Background */}
-                <div className="md:hidden absolute inset-0 z-0">
-                    <Image
-                        src="/design_assets/main_section_product_card_image.jpeg"
-                        alt="Background"
-                        fill
-                        className="object-cover opacity-80"
-                        priority
-                    />
-                    <div className="absolute inset-0 bg-burgundy/40 mix-blend-multiply" />
-                </div>
-
-                <div className="container-custom relative z-10 py-16 md:py-24 flex flex-col md:flex-row items-center">
-                    {/* Left Content */}
-                    <div className="w-full md:w-1/2 mb-8 md:mb-0 text-center md:text-left">
-                        <h1 className="font-goldman text-4xl md:text-5xl lg:text-6xl font-medium mb-4 text-left">
-                            New way to shop,<br />
-                            Just a lot <span className="text-beige font-bold">less</span><br /> work.
-                        </h1>
-                        <p className="text-lg md:text-xl mb-8 text-left">
-                            Describe the item or upload a photo to find your perfect match.
-                        </p>
-
-                        {/* Search Bar Component */}
-                        <div className="mb-4">
-                            <SearchBar
-                                variant="hero"
-                                placeholder="I'm looking for a top that's hot enough to get my crush's attention..."
-                                onSearch={handleSearch}
-                                onImageUpload={handleImageUpload}
-                            />
-                        </div>
-                    </div>
-
-                    {/* Right Content - Product Card Image (Desktop Only) */}
-                    <div className="hidden md:block w-full md:w-1/2 md:pl-8">
-                        <div className="relative max-w-md mx-auto">
-                            <div className="bg-white p-4 rounded-xl shadow-medium">
-                                <div className="relative aspect-square mb-4">
-                                    <Image
-                                        src="/design_assets/main_section_product_card_image.jpeg"
-                                        alt="Black viral jacket from TikTok"
-                                        fill
-                                        className="object-cover rounded-lg"
-                                    />
-                                </div>
-                                <div className="text-center text-text-primary">
-                                    <h3 className="font-goldman text-lg font-bold">black viral jacket from tiktok</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <HeroSection
+                onSearch={handleSearch}
+                onImageUpload={handleImageUpload}
+            />
 
             {/* Brands Section */}
             <section className="py-12 bg-background-light">
