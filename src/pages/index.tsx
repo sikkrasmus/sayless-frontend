@@ -66,7 +66,7 @@ const Home: NextPage = () => {
                 <div className="container-custom relative z-10 py-16 md:py-24 flex flex-col md:flex-row items-center">
                     {/* Left Content */}
                     <div className="w-full md:w-1/2 mb-8 md:mb-0 text-center md:text-left">
-                        <h1 className="font-goldman text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-left">
+                        <h1 className="font-goldman text-4xl md:text-5xl lg:text-6xl font-medium mb-4 text-left">
                             New way to shop,<br />
                             Just a lot <span className="text-beige font-bold">less</span><br /> work.
                         </h1>
@@ -81,7 +81,6 @@ const Home: NextPage = () => {
                                 placeholder="I'm looking for a top that's hot enough to get my crush's attention..."
                                 onSearch={handleSearch}
                                 onImageUpload={handleImageUpload}
-                                suggestions={['OOTD ideas for...', 'From brand...', 'In style...']}
                             />
                         </div>
                     </div>

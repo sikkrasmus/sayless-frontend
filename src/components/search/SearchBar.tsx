@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 
@@ -30,17 +30,69 @@ const SearchBar: React.FC<SearchBarProps> = ({
     onImageUpload,
     variant = 'default',
     className = '',
-    suggestions = ['OOTD ideas for...', 'From brand...', 'Price under...', 'In style...'],
+    suggestions = ['Under 30€ dresses...', 'Outfit ideas for...'],
 }) => {
     const [query, setQuery] = useState(initialQuery);
     const [isUploading, setIsUploading] = useState(false);
+    const [currentPlaceholder, setCurrentPlaceholder] = useState(placeholder);
+    const [isMounted, setIsMounted] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
-    const [isMounted, setIsMounted] = useState(false);
 
-    React.useEffect(() => {
+    // Define separate placeholder lists for mobile and desktop
+    const mobilePlaceholders = [
+        "Find a black dress...",
+        "Looking for jeans...",
+        "Need a winter coat...",
+        "Find party outfit...",
+        "Casual shoes..."
+    ];
+
+    const desktopPlaceholders = [
+        "I'm looking for a top that's hot enough to get my crush's attention...",
+        "Find me a dress similar to the one Emma Stone wore at the Oscars...",
+        "I need a casual outfit for a coffee date this weekend...",
+        "Looking for affordable alternatives to Balenciaga sneakers...",
+        "Show me trending winter coats under $200..."
+    ];
+
+    // Set isMounted to true after component mounts
+    useEffect(() => {
         setIsMounted(true);
     }, []);
+
+    // Rotate placeholders every 3 seconds
+    useEffect(() => {
+        if (!isMounted) return;
+
+        let currentIndex = 0;
+        const placeholders = window.innerWidth < 768 ? mobilePlaceholders : desktopPlaceholders;
+
+        const updatePlaceholder = () => {
+            setCurrentPlaceholder(placeholders[currentIndex]);
+            currentIndex = (currentIndex + 1) % placeholders.length;
+        };
+
+        // Set initial placeholder
+        updatePlaceholder();
+
+        // Set up interval for rotation
+        const intervalId = setInterval(updatePlaceholder, 3000);
+
+        // Handle window resize to switch between mobile and desktop placeholders
+        const handleResize = () => {
+            const newPlaceholders = window.innerWidth < 768 ? mobilePlaceholders : desktopPlaceholders;
+            setCurrentPlaceholder(newPlaceholders[currentIndex]);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        // Clean up
+        return () => {
+            clearInterval(intervalId);
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [isMounted]);
 
     // Determine classes based on variant
     const getInputClasses = () => {
@@ -102,6 +154,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
     const triggerFileInput = () => {
         fileInputRef.current?.click();
     };
+
+    // Use a safe placeholder that works during SSR
+    const safePlaceholder = isMounted ? currentPlaceholder : placeholder;
 
     return (
         <div className={`${getContainerClasses()} ${className}`}>
@@ -178,11 +233,11 @@ const SearchBar: React.FC<SearchBarProps> = ({
                         </span>
                     </span>
 
-                    {/* Search Input */}
+                    {/* Search Input with animated placeholder */}
                     <input
                         type="text"
-                        className={getInputClasses()}
-                        placeholder={placeholder}
+                        className={`${getInputClasses()} transition-all duration-500 ease-in-out`}
+                        placeholder={safePlaceholder}
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         aria-label="Search"
@@ -336,7 +391,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                     {suggestions.map((suggestion, index) => (
                         <button
                             key={index}
-                            className="bg-white/10 hover:bg-white/20 text-white text-sm py-1.5 px-3 rounded-full transition-colors"
+                            className="bg-white text-burgundy text-sm py-2 px-4 rounded-lg border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors"
                             onClick={() => setQuery(suggestion)}
                         >
                             {suggestion}
